@@ -27,11 +27,11 @@
                         لطفاً اطلاعات را درست وارد کنید.
                     </div>
                     {% endif %}
-                    {{ form.username.label_tag }}
-                    {{ form.username|add_class:"form-control mb-3" }}
+                    <h6>نام کاربری یا ایمیل</h6 class="form-control mb-3">
+                    {{ form.username|add_class_and_attrs:"form-control mb-3|oninvalid=this.setCustomValidity('نام کاربری یا ایمیل الزامی است.')" }}
 
-                    {{ form.password.label_tag }}
-                    {{ form.password|add_class:"form-control mb-3" }}
+                    <h6>رمز عبور</h6 class="form-control mb-3">
+                    {{ form.password|add_class_and_attrs:"form-control mb-3|oninvalid=this.setCustomValidity('رمز عبور الزامی است.')" }}
 
                     <button type="submit" class="btn btn-primary w-100">ورود</button>
                 </form>

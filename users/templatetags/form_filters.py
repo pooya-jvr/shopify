@@ -24,3 +24,11 @@ def add_attrs(field, arg):
     except Exception as e:
         print(f"Error in add_attrs filter: {e}")
     return field.as_widget(attrs=attrs)
+
+
+@register.filter(name="add_class_and_attrs")
+def add_class_and_attrs(field, args):
+    class_name, attrs_str = args.split("|", 1)
+    attrs = dict(item.split("=") for item in attrs_str.split(","))
+    attrs["class"] = class_name
+    return field.as_widget(attrs=attrs)

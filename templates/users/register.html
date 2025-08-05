@@ -29,20 +29,50 @@
                     </div>
                     {% endif %}
 
-                    {{ form.username.label_tag }}
-                    {{ form.username|add_class:"form-control mb-3" }}
+                    <div class="mb-3 text-align-center">
+                        <h6>نام کاربری</h6 class="form-control mb-3">
+                        {{ form.username|add_class_and_attrs:"form-control mb-3|oninvalid=this.setCustomValidity('نام کاربری یا ایمیل الزامی است.')" }}
 
-                    {{ form.email.label_tag }}
-                    {{ form.email|add_class:"form-control mb-3" }}
+                        {% for error in form.username.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
 
-                    {{ form.password1.label_tag }}
-                    {{ form.password1|add_class:"form-control mb-3" }}
+                    <div class="mb-3 text-align-center">
+                        <h6>ایمیل</h6 class="form-control mb-3">
+                        {{ form.email|add_class:"form-control" }}
+                        {% for error in form.email.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
 
-                    {{ form.password2.label_tag }}
-                    {{ form.password2|add_class:"form-control mb-3" }}
+                    <div class="mb-3 text-align-center">
+                        <h6>رمز عبور</h6 class="form-control mb-3">
+                        {{ form.password1|add_class:"form-control" }}
+                        {% for error in form.password1.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3 text-align-center">
+                        <h6>تکرار رمز عبور</h6 class="form-control mb-3">
+                        {{ form.password2|add_class:"form-control" }}
+                        {% for error in form.password2.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
 
                     <button type="submit" class="btn btn-success w-100">ثبت‌ نام</button>
                 </form>
+
             </div>
             <div class="card-footer text-muted">
                 <small>حساب داری؟ <a href="{% url 'login' %}">ورود</a></small>
