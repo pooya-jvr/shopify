@@ -1,0 +1,75 @@
+<!-- templates/core/navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <div class="container-fluid">
+
+        <!-- سمت چپ: سبد خرید + برند -->
+        <div class="d-flex align-items-center">
+            <!-- سبد خرید -->
+            <div class="dropdown me-2">
+                <button class="btn btn-outline-light position-relative" type="button" id="cartDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    🛒
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                        <span class="visually-hidden">items in cart</span>
+                    </span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-start p-3" style="min-width: 250px;">
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <span>محصول ۱</span>
+                            <span>۲ × ۵۰ هزار تومان</span>
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <span>محصول ۲</span>
+                            <span>۱ × ۷۰ هزار تومان</span>
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <div class="d-flex justify-content-between">
+                            <span>محصول ۳</span>
+                            <span>۳ × ۳۰ هزار تومان</span>
+                        </div>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li class="text-center">
+                        <a class="btn btn-primary btn-sm w-100" href="#">مشاهده سبد خرید</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- برند -->
+            <a class="navbar-brand mb-0 text-white" href="#">پنل فروشگاه</a>
+        </div>
+
+        <!-- لینک‌ها وسط Navbar -->
+        <div class="collapse navbar-collapse justify-content-center">
+            <ul class="navbar-nav mb-2 mb-lg-0 text-center">
+                <li class="nav-item"><a class="nav-link" href="#">خانه</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">محصولات</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">درباره ما</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">تماس با ما</a></li>
+            </ul>
+        </div>
+
+        <!-- سمت راست: اطلاعات کاربر + خروج -->
+        <div class="d-flex align-items-center">
+            <span class="text-white me-3">سلام، {{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-light btn-sm">خروج</button>
+            </form>
+        </div>
+
+    </div>
+</nav>
