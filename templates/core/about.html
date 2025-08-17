@@ -1,0 +1,64 @@
+<!-- templates/core/about.html -->
+{% extends "core/base.html" %}
+
+{% block title %}درباره ما{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">درباره فروشگاه</h2>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- تلفن -->
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100">
+                <div class="card-body">
+                    <i class="bi bi-telephone-fill fs-2 mb-2"></i>
+                    <h5 class="card-title">تلفن</h5>
+                    <p class="card-text">{{ phone }}</p>
+                    <p class="card-title">ساعت پاسخگویی شنبه تا چهارشنبه ساعت 9 تا 23</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ایمیل -->
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100">
+                <div class="card-body">
+                    <i class="bi bi-envelope-fill fs-2 mb-2"></i>
+                    <h5 class="card-title">ایمیل</h5>
+                    <p class="card-text">{{ email }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- آدرس -->
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100">
+                <div class="card-body">
+                    <i class="bi bi-geo-alt-fill fs-2 mb-2"></i>
+                    <h5 class="card-title">آدرس</h5>
+                    <p class="card-text">{{ address }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- وب‌سایت -->
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm h-100">
+                <div class="card-body">
+                    <i class="bi bi-globe fs-2 mb-2"></i>
+                    <h5 class="card-title">وب‌سایت</h5>
+                    <p class="card-text">
+                        <a href="{{ website }}" target="_blank">{{ website }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}
