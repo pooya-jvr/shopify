@@ -1,0 +1,15 @@
+<h2>سبد خرید شما</h2>
+
+{% if cart %}
+<ul>
+    {% for item_id, item in cart.items %}
+    <li>
+        {{ item.name }} - {{ item.quantity }} × {{ item.price }} تومان
+    </li>
+    {% endfor %}
+</ul>
+<p>جمع کل: {{ total }} تومان</p>
+<a href="{% url 'checkout' %}">تسویه حساب</a>
+{% else %}
+<p>سبد خرید شما خالی است.</p>
+{% endif %}

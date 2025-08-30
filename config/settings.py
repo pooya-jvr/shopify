@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users.apps.UsersConfig",
     "core.apps.CoreConfig",
+    "products.apps.ProductsConfig",
+    "corsheaders",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -80,6 +84,13 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+}
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
 
 
@@ -129,3 +140,12 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/"
+
+CART_SESSION_ID = "cart"
+CORS_ALLOW_ALL_ORIGINS = True
+TRUSTED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
+    "172.17.0.1",
+]

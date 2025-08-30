@@ -1,21 +1,51 @@
-<!-- templates/home.html -->
 {% extends "core/base.html" %}
 
 {% block title %}خانه{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">محصولات</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="محصول نمونه">
-            <div class="card-body">
-                <h5 class="card-title">نام محصول</h5>
-                <p class="card-text">توضیح کوتاه محصول.</p>
-                <a href="#" class="btn btn-primary">جزئیات</a>
-            </div>
+<!-- templates/core/home.html -->
+{% for product in products %}
+<div class="col-md-4">
+    <div class="card mb-4 shadow-sm">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+        {% else %}
+        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ product.name }}">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <button class="btn btn-primary add-to-cart" data-id="{{ product.id }}">
+                افزودن به سبد
+            </button>
         </div>
     </div>
 </div>
+{% endfor %}
+
+<script>
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const productId = btn.dataset.id;
+            fetch(`/products/add-to-cart/${productId}/`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // آپدیت تعداد در navbar
+                        const badge = document.querySelector("#cartDropdown .badge");
+                        badge.textContent = data.total_items;
+
+                        // پیام موفقیت
+                        const alertBox = document.createElement("div");
+                        alertBox.className = "alert alert-success mt-2";
+                        alertBox.textContent = "✅ محصول به سبد خرید اضافه شد";
+                        btn.parentElement.appendChild(alertBox);
+
+                        setTimeout(() => alertBox.remove(), 2000);
+                    }
+                });
+        });
+    });
+</script>
+
 {% endblock %}

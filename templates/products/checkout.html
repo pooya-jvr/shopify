@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+
+{% block title %}تسویه حساب{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">💳 تسویه حساب</h2>
+
+    {% if user.is_authenticated %}
+    <div class="card p-4 shadow-sm">
+        <h5>جزئیات سفارش</h5>
+        <p>کاربر: {{ user.username }}</p>
+        <p>جمع کل: {{ total }} تومان</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-lg">پرداخت</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center">
+        برای ادامه تسویه حساب باید وارد شوید.
+    </div>
+    <div class="text-center">
+        <a href="{% url 'login' %}?next={% url 'checkout' %}" class="btn btn-success btn-lg">
+            ورود به حساب
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
