@@ -13,8 +13,8 @@ class Products(APIView):
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-
         products_obj = Product.objects.filter(stock=True)
-        serz_data = GetProductsSerializer(products_obj, many=True)
-
+        serz_data = GetProductsSerializer(
+            products_obj, many=True, context={"request": request}
+        )
         return Response(data=serz_data.data, status=status.HTTP_200_OK)
