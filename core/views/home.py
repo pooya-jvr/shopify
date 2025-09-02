@@ -5,10 +5,7 @@ from products.models import Product
 def home(request):
     products = Product.objects.all()
 
-    # گرفتن آیتم‌های سبد خرید از session
-    cart = request.session.get(
-        "cart", {}
-    )  # cart یک dict با product_id: {name, price, quantity}
+    cart = request.session.get("cart", {})
 
     cart_items = []
     for product_id, item in cart.items():
