@@ -149,6 +149,7 @@ TRUSTED_HOSTS = [
     "127.0.0.1",
     "0.0.0.0",
     "172.17.0.1",
+    "http://localhost:5173",
 ]
 
 
@@ -160,5 +161,11 @@ SIMPLE_JWT = {
 }
 
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+CORS_ALLOW_CREDENTIALS = True

@@ -25,12 +25,12 @@ class CustomUserCreationForm(forms.ModelForm):
         },
     )
 
-    password1 = forms.CharField(
+    password = forms.CharField(
         label="رمز عبور",
         widget=forms.PasswordInput,
         error_messages={"required": "رمز عبور را وارد کنید."},
     )
-    password2 = forms.CharField(
+    confirmPassword = forms.CharField(
         label="تکرار رمز عبور",
         widget=forms.PasswordInput,
         error_messages={"required": "تکرار رمز عبور را وارد کنید."},
@@ -42,15 +42,15 @@ class CustomUserCreationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        password1 = cleaned_data.get("password1")
-        password2 = cleaned_data.get("password2")
+        password = cleaned_data.get("password")
+        confirmPassword = cleaned_data.get("confirmPassword")
 
-        if password1 and password2 and password1 != password2:
-            self.add_error("password2", "رمز عبور و تکرار آن یکسان نیستند.")
+        if password and confirmPassword and password != confirmPassword:
+            self.add_error("confirmPassword", "رمز عبور و تکرار آن یکسان نیستند.")
 
-        if password1:
+        if password:
             try:
-                validate_password(password1, user=self.instance)
+                validate_password(password, user=self.instance)
             except ValidationError as e:
                 translated_errors = []
                 for msg in e.messages:
@@ -66,13 +66,13 @@ class CustomUserCreationForm(forms.ModelForm):
                         translated_errors.append("رمز عبور نباید فقط عدد باشد.")
                     else:
                         translated_errors.append(msg)
-                self.add_error("password1", translated_errors)
+                self.add_error("password", translated_errors)
 
         return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
+        user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
         return user
