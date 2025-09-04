@@ -409,6 +409,8 @@ pyrightconfig.json
 ****.pyc
 *.*.pyc
 **/__pycache__/
+__pycache__/
+
 
 
 # Byte-compiled / optimized / DLL files
