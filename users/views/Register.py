@@ -7,7 +7,6 @@ from users.forms import CustomUserCreationForm
 
 class Register(APIView):
     def post(self, request):
-        print(request.data)
         form = CustomUserCreationForm(request.data)
         if form.is_valid():
             form.save()
