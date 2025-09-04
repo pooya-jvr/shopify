@@ -9,8 +9,8 @@ from products.serializers import GetProductsSerializer
 
 
 class Products(APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    permission_classes = []
+    authentication_classes = []
 
     def get(self, request):
         products_obj = Product.objects.filter(stock=True)

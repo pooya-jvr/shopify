@@ -5,9 +5,26 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name_plural = "Categories"
+
+    def __str__(self):
+        return self.name
+
+
+class SubCategory(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name="subcategory"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name_plural = "SubCategories"
 
     def __str__(self):
         return self.name
@@ -20,6 +37,13 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products/images/", null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="products"
+    )
+    sub_category = models.ForeignKey(
+        SubCategory,
+        on_delete=models.CASCADE,
+        related_name="sub_category",
+        null=True,
+        blank=True,
     )
     discount = models.PositiveIntegerField(default=0)
     stock = models.BooleanField(default=True)
