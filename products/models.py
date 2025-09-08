@@ -65,38 +65,24 @@ class Product(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="cart"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="carts"
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def total_price(self):
-        total = 0
-        for product in self.product_set.all():
-            total += product.price
-        return total
+        return sum(item.total_price() for item in self.items.all())
 
     def __str__(self):
         return self.user.username
 
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="cart_item")
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="product"
-    )
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ("cart", "product")
 
     def total_price(self):
-        return (
-            self.cart_item.aggregate(total=Sum(F("product__price") * F("quantity")))[
-                "total"
-            ]
-            or 0
-        )
+        return self.product.price * self.quantity
 
     def __str__(self):
-        return self.product.name
+        return f"{self.product.name} x {self.quantity}"
