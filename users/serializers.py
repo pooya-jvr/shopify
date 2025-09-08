@@ -35,9 +35,18 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
 
-class GetUserPrifileSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=255)
-    email = serializers.EmailField(max_length=254)
-    first_name = serializers.CharField(max_length=255)
-    last_name = serializers.CharField(max_length=255)
-    mobile_number = serializers.CharField(max_length=255)
+class GetUserPrifileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = [
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "is_staff",
+            "is_active",
+            "is_superuser",
+            "mobile_number",
+            "date_joined",
+        ]
