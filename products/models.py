@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.db.models import Sum, F
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -85,8 +87,16 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ("cart", "product")
+
     def total_price(self):
-        return self.product.price * self.quantity
+        return (
+            self.cart_item.aggregate(total=Sum(F("product__price") * F("quantity")))[
+                "total"
+            ]
+            or 0
+        )
 
     def __str__(self):
         return self.product.name
