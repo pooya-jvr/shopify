@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Product, Category, SubCategory, CartItem, Cart
+from . import models
 
 
 class GetProductsSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
 
     class Meta:
-        model = Product
+        model = models.Product
         fields = "__all__"
 
     def get_image(self, obj):
@@ -18,7 +18,7 @@ class GetProductsSerializer(serializers.ModelSerializer):
 
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = SubCategory
+        model = models.SubCategory
         fields = "__all__"
 
 
@@ -26,17 +26,18 @@ class GetAllCategorys(serializers.ModelSerializer):
     subcategory = SubCategorySerializer(many=True, read_only=True)
 
     class Meta:
-        model = Category
+        model = models.Category
         fields = "__all__"
 
 
 class CartItemSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source="product.name", read_only=True)
+    product_id = serializers.IntegerField(source="product.id", read_only=True)
     total = serializers.SerializerMethodField()
 
     class Meta:
-        model = CartItem
-        fields = ["name", "quantity", "total"]
+        model = models.CartItem
+        fields = ["product_id", "name", "quantity", "total"]
 
     def get_total(self, obj):
         return obj.product.price * obj.quantity
@@ -47,7 +48,7 @@ class CartSerializer(serializers.ModelSerializer):
     total_price = serializers.SerializerMethodField()
 
     class Meta:
-        model = Cart
+        model = models.Cart
         fields = ["id", "items", "total_price"]
 
     def get_total_price(self, obj):

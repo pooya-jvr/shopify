@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import APIException
-from users.models import CustomUser
+from users.models import CustomUser, UserAddress
 from rest_framework import serializers
 
 
@@ -50,3 +50,30 @@ class GetUserPrifileSerializer(serializers.ModelSerializer):
             "mobile_number",
             "date_joined",
         ]
+
+
+class GetUserAddressSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserAddress
+        fields = [
+            "id",
+            "user",
+            "address",
+            "floor",
+            "building",
+            "street",
+            "city",
+            "sub_city",
+            "postal_code",
+            "phone_number",
+            "home_phone_number",
+            "is_default",
+            "created_at",
+            "updated_at",
+            "created_by",
+        ]
+
+    def get_user(self, obj):
+        return obj.user.username

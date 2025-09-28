@@ -69,6 +69,7 @@ class Cart(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
     def total_price(self):
         return sum(item.total_price() for item in self.items.all())
 
@@ -81,6 +82,7 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
 
+    @property
     def total_price(self):
         return self.product.price * self.quantity
 
