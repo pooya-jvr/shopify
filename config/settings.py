@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "core.apps.CoreConfig",
     "products.apps.ProductsConfig",
+    "shop.apps.ShopConfig",
     "corsheaders",
     "rest_framework",
 ]

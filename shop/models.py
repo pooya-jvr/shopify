@@ -25,21 +25,25 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=10, choices=ORDER_STATUS_CHOICES)
     payment_status = models.CharField(max_length=10, default="pending")
-    payment_id = models.CharField(max_length=100, default="")
+    payment_id = models.CharField(max_length=100, default="", null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="created_by"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="orders_created_by"
     )
     updated_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="updated_by"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="orders_updated_by"
     )
-    cancel_request = models.BooleanField(default=False)
-    cancel_reason = models.CharField(max_length=100, default="")
+    cancel_request = models.BooleanField(default=False, null=True, blank=True)
+    cancel_reason = models.CharField(max_length=100, default="", null=True, blank=True)
     cancel_at = models.DateTimeField(null=True, blank=True)
     cancel_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="cancel_by"
+        "users.CustomUser",
+        on_delete=models.CASCADE,
+        related_name="orders_cancel_by",
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -55,10 +59,14 @@ class OrderItem(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="created_by"
+        "users.CustomUser",
+        on_delete=models.CASCADE,
+        related_name="orderitems_created_by",
     )
     updated_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="updated_by"
+        "users.CustomUser",
+        on_delete=models.CASCADE,
+        related_name="orderitems_updated_by",
     )
 
     def __str__(self):

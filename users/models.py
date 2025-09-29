@@ -27,8 +27,8 @@ class UserAddress(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="created_by"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="address_created_by"
     )
     updated_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="updated_by"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="address_updated_by"
     )

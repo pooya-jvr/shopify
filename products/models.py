@@ -51,11 +51,11 @@ class Product(models.Model):
     stock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="created_by"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="products_created_by"
     )
     updated_at = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(
-        "users.CustomUser", on_delete=models.CASCADE, related_name="updated_by"
+        "users.CustomUser", on_delete=models.CASCADE, related_name="products_updated_by"
     )
     sold = models.IntegerField(default=0)
 
@@ -71,7 +71,7 @@ class Cart(models.Model):
 
     @property
     def total_price(self):
-        return sum(item.total_price() for item in self.items.all())
+        return sum(item.total_price for item in self.items.all())
 
     def __str__(self):
         return self.user.username
